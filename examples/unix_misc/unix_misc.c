@@ -15,7 +15,7 @@ void init (void){
 // print callback for microrl library
 void print (const char * str)
 {
-	fprintf (stdout, "%s", str);
+	fprintf(stdout, "%s", str);
 }
 
 
@@ -50,29 +50,29 @@ char get_char (void)
 #define _NUM_OF_VER_SCMD 2
 
 //available  commands
-char * keyworld [] = {_CMD_HELP, _CMD_CLEAR, _CMD_LIST, _CMD_NAME, _CMD_VER, _CMD_LISP};
+char * keyword[] = {_CMD_HELP, _CMD_CLEAR, _CMD_LIST, _CMD_NAME, _CMD_VER, _CMD_LISP};
 // version subcommands
-char * ver_keyworld [] = {_SCMD_MRL, _SCMD_DEMO};
+char * ver_keyword[] = {_SCMD_MRL, _SCMD_DEMO};
 
 // array for comletion
-char * compl_world [_NUM_OF_CMD + 1];
+char * compl_word[_NUM_OF_CMD + 1];
 
 // 'name' var for store some string
 #define _NAME_LEN 8
-char name [_NAME_LEN];
+char name[_NAME_LEN];
 int val;
 
 
 //*****************************************************************************
 void print_help ()
 {
-	print ("Use TAB key for completion\n\rCommand:\n\r");
-	print ("\tversion {microrl | demo} - print version of microrl lib or version of this demo src\n\r");
-	print ("\thelp  - this message\n\r");
-	print ("\tclear - clear screen\n\r");
-	print ("\tlist  - list all commands in tree\n\r");
-	print ("\tname [string] - print 'name' value if no 'string', set name value to 'string' if 'string' present\n\r");
-	print ("\tlisp - dummy command for demonstation auto-completion, while inputed 'l+<TAB>'\n\r");
+	print("Use TAB key for completion\n\rCommand:\n\r");
+	print("\tversion {microrl | demo} - print version of microrl lib or version of this demo src\n\r");
+	print("\thelp  - this message\n\r");
+	print("\tclear - clear screen\n\r");
+	print("\tlist  - list all commands in tree\n\r");
+	print("\tname [string] - print 'name' value if no 'string', set name value to 'string' if 'string' present\n\r");
+	print("\tlisp - dummy command for demonstation auto-completion, while inputed 'l+<TAB>'\n\r");
 }
 
 //*****************************************************************************
@@ -83,47 +83,47 @@ int execute (int argc, const char * const * argv)
 	int i = 0;
 	// just iterate through argv word and compare it with your commands
 	while (i < argc) {
-		if (strcmp (argv[i], _CMD_HELP) == 0) {
-			print ("microrl library based shell v 1.0\n\r");
-			print_help ();        // print help
-		} else if (strcmp (argv[i], _CMD_NAME) == 0) {
+		if (strcmp(argv[i], _CMD_HELP) == 0) {
+			print("microrl library based shell v 1.0\n\r");
+			print_help();        // print help
+		} else if (strcmp(argv[i], _CMD_NAME) == 0) {
 			if ((++i) < argc) { // if value preset
-				if (strlen (argv[i]) < _NAME_LEN) {
-					strcpy (name, argv[i]);
+				if (strlen(argv[i]) < _NAME_LEN) {
+					strcpy(name, argv[i]);
 				} else {
-					print ("name value too long!\n\r");
+					print("name value too long!\n\r");
 				}
 			} else {
-				print (name);
-				print ("\n\r");
+				print(name);
+				print("\n\r");
 			}
-		} else if (strcmp (argv[i], _CMD_VER) == 0) {
+		} else if (strcmp(argv[i], _CMD_VER) == 0) {
 			if (++i < argc) {
-				if (strcmp (argv[i], _SCMD_DEMO) == 0) {
-					print ("demo v 1.0\n\r");
-				} else if (strcmp (argv[i], _SCMD_MRL) == 0) {
-					print ("microrl v 1.2\n\r");
+				if (strcmp(argv[i], _SCMD_DEMO) == 0) {
+					print("demo v 1.0\n\r");
+				} else if (strcmp(argv[i], _SCMD_MRL) == 0) {
+					print("microrl v 1.2\n\r");
 				} else {
-					print ((char*)argv[i]);
-					print (" wrong argument, see help\n\r");
+					print((char*)argv[i]);
+					print(" wrong argument, see help\n\r");
 				}
 			} else {
-				print ("version needs 1 parametr, see help\n\r");
+				print("version needs 1 parametr, see help\n\r");
 			}
-		} else if (strcmp (argv[i], _CMD_CLEAR) == 0) {
-			print ("\033[2J");    // ESC seq for clear entire screen
-			print ("\033[H");     // ESC seq for move cursor at left-top corner
-		} else if (strcmp (argv[i], _CMD_LIST) == 0) {
-			print ("available command:\n");// print all command per line
+		} else if (strcmp(argv[i], _CMD_CLEAR) == 0) {
+			print("\033[2J");    // ESC seq for clear entire screen
+			print("\033[H");     // ESC seq for move cursor at left-top corner
+		} else if (strcmp(argv[i], _CMD_LIST) == 0) {
+			print("available command:\n");// print all command per line
 			for (int i = 0; i < _NUM_OF_CMD; i++) {
-				print ("\t");
-				print (keyworld[i]);
-				print ("\n\r");
+				print("\t");
+				print(keyword[i]);
+				print("\n\r");
 			}
 		} else {
-			print ("command: '");
-			print ((char*)argv[i]);
-			print ("' Not found.\n\r");
+			print("command: '");
+			print((char*)argv[i]);
+			print("' Not found.\n\r");
 		}
 		i++;
 	}
@@ -133,46 +133,46 @@ int execute (int argc, const char * const * argv)
 #ifdef _USE_COMPLETE
 //*****************************************************************************
 // completion callback for microrl library
-char ** complet (int argc, const char * const * argv)
+char ** complete (int argc, const char * const * argv)
 {
 	int j = 0;
 
-	compl_world [0] = NULL;
+	compl_word[0] = NULL;
 
 	// if there is token in cmdline
 	if (argc == 1) {
 		// get last entered token
-		char * bit = (char*)argv [argc-1];
+		char * bit = (char*)argv[argc-1];
 		// iterate through our available token and match it
 		for (int i = 0; i < _NUM_OF_CMD; i++) {
 			// if token is matched (text is part of our token starting from 0 char)
-			if (strstr(keyworld [i], bit) == keyworld [i]) {
+			if (strstr(keyword[i], bit) == keyword[i]) {
 				// add it to completion set
-				compl_world [j++] = keyworld [i];
+				compl_word[j++] = keyword[i];
 			}
 		}
-	}	else if ((argc > 1) && (strcmp (argv[0], _CMD_VER)==0)) { // if command needs subcommands
+	}	else if ((argc > 1) && (strcmp(argv[0], _CMD_VER)==0)) { // if command needs subcommands
 		// iterate through subcommand for command _CMD_VER array
 		for (int i = 0; i < _NUM_OF_VER_SCMD; i++) {
-			if (strstr (ver_keyworld [i], argv [argc-1]) == ver_keyworld [i]) {
-				compl_world [j++] = ver_keyworld [i];
+			if (strstr(ver_keyword[i], argv[argc-1]) == ver_keyword[i]) {
+				compl_word[j++] = ver_keyword[i];
 			}
 		}
 	} else { // if there is no token in cmdline, just print all available token
 		for (; j < _NUM_OF_CMD; j++) {
-			compl_world[j] = keyworld [j];
+			compl_word[j] = keyword[j];
 		}
 	}
 
 	// note! last ptr in array always must be NULL!!!
-	compl_world [j] = NULL;
+	compl_word[j] = NULL;
 	// return set of variants
-	return compl_world;
+	return compl_word;
 }
 #endif
 
 //*****************************************************************************
 void sigint (void)
 {
-	print ("^C catched!\n\r");
+	print("^C catched!\n\r");
 }

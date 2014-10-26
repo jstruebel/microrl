@@ -1,6 +1,6 @@
 /*
 Microrl library config files
-Autor: Eugene Samoylov aka Helius (ghelius@gmail.com)
+Author: Eugene Samoylov aka Helius (ghelius@gmail.com)
 */
 #ifndef _MICRORL_CONFIG_H_
 #define _MICRORL_CONFIG_H_
@@ -10,7 +10,7 @@ Autor: Eugene Samoylov aka Helius (ghelius@gmail.com)
 Command line length, define cmdline buffer size. Set max number of chars + 1,
 because last byte of buffer need to contain '\0' - NULL terminator, and 
 not use for storing inputed char.
-If user input chars more then it parametrs-1, chars not added to command line.*/
+If user input chars more then it parameters-1, chars not added to command line.*/
 #define _COMMAND_LINE_LEN (1+100)									// for 32 chars
 
 /*
@@ -34,7 +34,7 @@ ESC sequence, it's not possible detect only text length*/
 #define _PROMPT_LEN       7
 
 /*Define it, if you wanna use completion functional, also set completion callback in you code,
-now if user press TAB calls 'copmlitetion' callback. If you no need it, you can just set 
+now if user press TAB calls 'completion' callback. If you no need it, you can just set 
 NULL to callback ptr and do not use it, but for memory saving tune, 
 if you are not going to use it - disable this define.*/
 #define _USE_COMPLETE
@@ -48,7 +48,7 @@ memory consuming, depends from _RING_HISTORY_LEN parametr */
 History ring buffer length, define static buffer size.
 For saving memory, each entered cmdline store to history in ring buffer,
 so we can not say, how many line we can store, it depends from cmdline len,
-but memory using more effective. We not prefer dinamic memory allocation for
+but memory using more effective. We not prefer dynamic memory allocation for
 small and embedded devices. Overhead is 2 char on each saved line*/
 #define _RING_HISTORY_LEN 64
 
@@ -67,7 +67,7 @@ Try to build with and without, and compare total code size for tune library.
 
 /*
 Enable 'interrupt signal' callback, if user press Ctrl+C */
-#define _USE_CTLR_C
+#define _USE_CTRL_C
 
 /*
 Print prompt at 'microrl_init', if enable, prompt will print at startup, 
