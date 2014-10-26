@@ -391,10 +391,10 @@ static int escape_process (microrl_t * pThis, char ch)
 				pThis->cursor--;
 			}
 			return 1;
-		} else if (ch == '7') {
+		} else if (ch == '1') {
 			pThis->escape_seq = _ESC_HOME;
 			return 0;
-		} else if (ch == '8') {
+		} else if (ch == '4') {
 			pThis->escape_seq = _ESC_END;
 			return 0;
 		} 
