@@ -129,7 +129,7 @@ static void terminal_reset_cursor (microrl_t * pThis)
 }
 
 //*****************************************************************************
-// print cmdline to screen, replace '\0' to wihitespace 
+// print cmdline to screen, replace '\0' with whitespace 
 static void terminal_print_line (microrl_t * pThis, int pos, int cursor)
 {
 	pThis->print("\033[K");    // delete all from cursor to end
@@ -154,28 +154,28 @@ static void terminal_print_line (microrl_t * pThis, int pos, int cursor)
 // print buffer content on screen
 static void print_hist (ring_history_t * pThis)
 {
-	pThis->print(ENDL);
+	printf("\n");
 	for (int i = 0; i < _RING_HISTORY_LEN; i++) {
 		if (i == pThis->begin)
-			pThis->print("b");
+			printf("b");
 		else 
-			pThis->print(" ");
+			printf(" ");
 	}
-	pThis->print(ENDL);
+	printf("\n");
 	for (int i = 0; i < _RING_HISTORY_LEN; i++) {
 		if (isalpha(pThis->ring_buf[i]))
-			pThis->print("%c", pThis->ring_buf[i]);
+			printf("%c", pThis->ring_buf[i]);
 		else 
-			pThis->print("%d", pThis->ring_buf[i]);
+			printf("%d", pThis->ring_buf[i]);
 	}
-	pThis->print("\n");
+	printf("\n");
 	for (int i = 0; i < _RING_HISTORY_LEN; i++) {
 		if (i == pThis->end)
-			pThis->print("e");
+			printf("e");
 		else 
-			pThis->print(" ");
+			printf(" ");
 	}
-	pThis->print(ENDL);
+	printf("\n");
 }
 #endif
 
