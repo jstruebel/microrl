@@ -670,3 +670,17 @@ void microrl_insert_char (microrl_t * pThis, int ch)
 	}
 #endif
 }
+
+// remove the current line (usually to output some information & repeat the line afterwards)
+void microrl_remove_current_line(microrl_t * pThis) {
+	int len = _PROMPT_LEN + pThis->cursor;
+	while (len-- > 0) {
+		terminal_backspace(pThis);
+	}
+}
+
+// reprint the current line
+void microrl_reprint_current_line(microrl_t * pThis) {
+	print_prompt(pThis);
+	terminal_print_line(pThis, 0, pThis->cursor);
+}
