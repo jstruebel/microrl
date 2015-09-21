@@ -337,6 +337,10 @@ void microrl_init (microrl_t * pThis, void (*print)(const char *))
 	pThis->prompt_str = prompt_default;
 	pThis->print = print;
 #ifdef _ENABLE_INIT_PROMPT
+#ifdef _CLEAR_BEFORE_INIT_PROMPT
+    print ("\033[2J");    // ESC seq for clear entire screen
+	print ("\033[H");     // ESC seq for move cursor at left-top corner
+#endif	
 	print_prompt(pThis);
 #endif
 }
