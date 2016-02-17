@@ -129,7 +129,7 @@ static void terminal_reset_cursor (microrl_t * pThis)
 }
 
 //*****************************************************************************
-// print cmdline to screen, replace '\0' to wihitespace 
+// print cmdline to screen, replace '\0' with whitespace 
 static void terminal_print_line (microrl_t * pThis, int pos, int cursor)
 {
 	pThis->print("\033[K");    // delete all from cursor to end
@@ -154,28 +154,28 @@ static void terminal_print_line (microrl_t * pThis, int pos, int cursor)
 // print buffer content on screen
 static void print_hist (ring_history_t * pThis)
 {
-	pThis->print(ENDL);
+	printf("\n");
 	for (int i = 0; i < _RING_HISTORY_LEN; i++) {
 		if (i == pThis->begin)
-			pThis->print("b");
+			printf("b");
 		else 
-			pThis->print(" ");
+			printf(" ");
 	}
-	pThis->print(ENDL);
+	printf("\n");
 	for (int i = 0; i < _RING_HISTORY_LEN; i++) {
 		if (isalpha(pThis->ring_buf[i]))
-			pThis->print("%c", pThis->ring_buf[i]);
+			printf("%c", pThis->ring_buf[i]);
 		else 
-			pThis->print("%d", pThis->ring_buf[i]);
+			printf("%d", pThis->ring_buf[i]);
 	}
-	pThis->print("\n");
+	printf("\n");
 	for (int i = 0; i < _RING_HISTORY_LEN; i++) {
 		if (i == pThis->end)
-			pThis->print("e");
+			printf("e");
 		else 
-			pThis->print(" ");
+			printf(" ");
 	}
-	pThis->print(ENDL);
+	printf("\n");
 }
 #endif
 
@@ -337,6 +337,10 @@ void microrl_init (microrl_t * pThis, void (*print)(const char *))
 	pThis->prompt_str = prompt_default;
 	pThis->print = print;
 #ifdef _ENABLE_INIT_PROMPT
+#ifdef _CLEAR_BEFORE_INIT_PROMPT
+    print ("\033[2J");    // ESC seq for clear entire screen
+	print ("\033[H");     // ESC seq for move cursor at left-top corner
+#endif	
 	print_prompt(pThis);
 #endif
 }
@@ -669,4 +673,18 @@ void microrl_insert_char (microrl_t * pThis, int ch)
 #ifdef _USE_ESC_SEQ
 	}
 #endif
+}
+
+// remove the current line (usually to output some information & repeat the line afterwards)
+void microrl_remove_current_line(microrl_t * pThis) {
+	int len = _PROMPT_LEN + pThis->cursor;
+	while (len-- > 0) {
+		terminal_backspace(pThis);
+	}
+}
+
+// reprint the current line
+void microrl_reprint_current_line(microrl_t * pThis) {
+	print_prompt(pThis);
+	terminal_print_line(pThis, 0, pThis->cursor);
 }

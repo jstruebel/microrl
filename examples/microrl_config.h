@@ -77,6 +77,10 @@ already initialize and ready to print message */
 #undef _ENABLE_INIT_PROMPT
 
 /*
+Clear screen before print prompt at 'microrl_init', if enable, screen will clear at startup.*/
+#define _CLEAR_BEFORE_INIT_PROMPT
+
+/*
 New line symbol */
 #define _ENDL_LF
 
